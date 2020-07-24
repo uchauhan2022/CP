@@ -1,3 +1,9 @@
+// Given the weight and the val array, and the weight of knapsack find the max value.
+// On every element there are 2 choices : To pick the element or to drop the element
+// Picking  the element reduces the knapsack availabe weight, while not picking (dropping) the element keeps the knapsack weight same
+// every element has a value attached to it
+// task is to find the max value one could attain
+// the code cover 3 appraches : 1) RECURSIVE 2) RECURSIVE with memorisation(DP) 3) Bottom up approach (DP)
 // IP = wt[], val[], W
 // OUTPUT = max value
 #include "bits/stdc++.h"

@@ -1,3 +1,4 @@
+// given an array find if there exists an subset array whose sum = required sum
 #include "bits/stdc++.h"
 using namespace std;
 #define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
