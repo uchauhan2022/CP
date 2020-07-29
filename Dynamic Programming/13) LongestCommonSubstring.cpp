@@ -1,4 +1,4 @@
-// Tob Down approach
+// Tob Down approach.
 #include "bits/stdc++.h"
 using namespace std;
 #define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
