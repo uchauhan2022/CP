@@ -23,7 +23,8 @@ void bfs(vector<int> &adj[], vector<int> &visited[], int v){
 								list<int> queue;
 								visited[v]=1;
 								list<int>::iterator i;
-								queue.(!queue.empty()){
+								queue.push_back(v)
+								while (!queue.empty()){
 																v=queue.front();
 																queue.pop_front();
 																for(int i = adj[v].begin(), i!=adj[v].end(); i++)
