@@ -20,9 +20,15 @@ typedef unsigned long int uli;
 typedef long long int lli;
 
 
-void dfs(int x,int y, vector<pair<int,pair<int,int> > > &adj, vector<vector<int> > &visited, int n, int m){
-  
+void dfs(int x,int y, vector<vector<int> > &adj, vector<vector<int> > &visited, int n, int m){
+  visited[x][y]=1;
+  if(x+1<n && !visited[x+1][y] && adj[x][y]>=adj[x+1][y]) dfs(x+1,y,adj,visited,n,m);
+  if(x-1>=0 && !visited[x-1][y] && adj[x][y]>=adj[x-1][y]) dfs(x-1,y,adj,visited,n,m);
+  if(y-1>=0 && !visited[x][y-1] && adj[x][y]>=adj[x][y-1]) dfs(x,y-1,adj,visited,n,m);
+  if(y+1<m && !visited[x][y+1] && adj[x][y]>=adj[x][y+1]) dfs(x,y+1,adj,visited,n,m);
+
 }
+
 int main()
 {
         ios_base::sync_with_stdio(false);
@@ -35,10 +41,12 @@ int main()
                 cin>>n>>m;
                 cout<<"Enter a matrix of "<<n<<"x"<<m<<" :";
                 vector<pair<int,pair<int,int> > > v;
+                vector<vector<int> > adj(n,vector<int> (m,0));
                 for(int i = 0; i<n; i++) {
                         for(int j = 0; j<m; j++) {
                                 int x;
                                 cin>>x;
+                                adj[i][j]=x;
                                 v.push_back(make_pair(x,make_pair(i,j)));
                         }
                 }
@@ -47,7 +55,7 @@ int main()
                 for(int i = v.size()-1; i>=0; i--) {
                         if(!visited[v[i].second.first][v[i].second.second]) {
                                 cout<<v[i].second.first<<","<<v[i].second.second<<endl;
-                                dfs(x[i].second.first,x[i].second.second, v, visited, n, m);
+                                dfs(v[i].second.first,v[i].second.second, adj, visited, n, m);
                         }
                 }
         }
