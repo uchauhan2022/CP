@@ -1,7 +1,7 @@
 #include "bits/stdc++.h"
 using namespace std;
-#define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
-#define RFOR(i, j, k, in) for (int i=j ; i>=k ; i-=in)
+#define FOR(i, j, k) for (int i=j; i<k; i+=1)
+#define RFOR(i, j, k) for (int i=j; i>=k; i-=1)
 #define MP make_pair
 #define PB push_back
 #define endl "\n"
@@ -18,49 +18,89 @@ typedef vector<string> VS;
 typedef long int li;
 typedef unsigned long int uli;
 typedef long long int lli;
-int flag = 0;
-void solve(vector<vector<int> > &ans, int x, int y, int count, int val, int n){
-  if(count==0)  return;
-  if(y-1>=0 && ans[x][y-1]==0){
-    ans[x][y-1]=val;
-    solve(ans,x,y-1,count-1,val,n);
+vector<vector<vector<long long int> > > dp(501, vector<vector<long long int> > (501, vector<long long int>(21,-2)));
+
+long long int dfs(vector<vector<long long int> > &ans, vector<vector<long long int> > &sideX,vector<vector<long long int> > &sideY, int k, int n, int m, int startx, int starty, int i, int j){
+  // cout<<"checking at path "<<i<<", "<<j<<" for "<<startx<<", "<<starty<<endl;
+  // cout<<"K = "<<k<<endl;
+  if(k==0){
+    if(startx==i && starty==j)  return 0;
+    return -1;
   }
-  else if(x+1<n && ans[x+1][y]==0){
-    ans[x+1][y]=val;
-    solve(ans,x+1,y,count-1,val,n);
+  if(dp[i][j][k]!=-2) return dp[i][j][k];
+  long long int s1=INT_MAX,s2=INT_MAX,s3=INT_MAX,s4=INT_MAX;
+  if(i+1<n){
+    s1=dfs(ans,sideX,sideY,k-1,n,m,startx,starty,i+1,j);
+    if(s1==-1)  s1=INT_MAX;
+    else  s1+=sideY[i][j];
   }
-  else {
-    flag = 1;
+  if(j+1<m){
+    s2=dfs(ans,sideX,sideY,k-1,n,m,startx,starty,i,j+1);
+    if(s2==-1)  s2=INT_MAX;
+    else  s2+=sideX[i][j];
   }
-  return;
+  if(i-1>=0){
+    s3=dfs(ans,sideX,sideY,k-1,n,m,startx,starty,i-1,j);
+    if(s3==-1)  s3=INT_MAX;
+    else  s3+=sideY[i-1][j];
+  }
+  if(j-1>=0){
+    s4=dfs(ans,sideX,sideY,k-1,n,m,startx,starty,i,j-1);
+    if(s4==-1)  s4=INT_MAX;
+    else  s4+=sideX[i][j-1];
+  }
+  long long int s = min(s1,min(s2,min(s3,s4)));
+  if(s==INT_MAX)  return dp[i][j][k]=-1;
+  return dp[i][j][k]=s;
 }
-void printAns(vector<vector<int> > &ans, int n){
-  for(int i = 0; i<n; i++){
-    for( int j = 0; j<=i; j++){
+void show(vector<vector<long long int> > &ans, long long int n , long long int m){
+  FOR(i,0,n){
+    FOR(j,0,m){
       cout<<ans[i][j]<<" ";
     }
     cout<<endl;
   }
 }
+void reset(){
+  FOR(i,0,501){
+    FOR(j,0,501){
+      FOR(k,0,21) dp[i][j][k]=-2;
+    }
+  }
+}
+void solve(vector<vector<long long int> > &ans, vector<vector<long long int> > &sideX,vector<vector<long long int> > &sideY, int k, int n, int m){
+  FOR(i,0,n){
+    FOR(j,0,m){
+      reset();
+      ans[i][j]=dfs(ans,sideX,sideY,k,n,m,i,j,i,j);
+    }
+  }
+  show(ans,n,m);
+}
+
 int main()
 {
-  ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-    int n;
-    cin>>n;
-    vector<int> v(n,0);
-    FOR(i,0,n,1)  cin>>v[i];
-    vector<vector<int> > ans(n,vector<int>(n,0));
-
-    for(int i = 0; i<n; i++){
-      ans[i][i]=v[i];
-      solve(ans,i,i,v[i]-1,v[i],n);
-    }
-    if(flag){
-      cout<<-1<<endl;
-      return 0;
-    }
-    printAns(ans,n);
-
-  return 0;
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
+        int t=1;
+        // cin>>t;
+        while(t--){
+          int n,m,k;
+          cin>>n>>m>>k;
+          vector<vector<long long int> > sidesX(n,vector<long long int> (m-1,-1));
+          vector<vector<long long int> > sidesY(m,vector<long long int> (m,-1));
+          FOR(i,0,n){
+            FOR(j,0,m-1){
+              cin>>sidesX[i][j];
+            }
+          }
+          FOR(i,0,n-1){
+            FOR(j,0,m){
+              cin>>sidesY[i][j];
+            }
+          }
+          vector<vector<long long int> > ans(n,vector<long long int> (m,INT_MAX));
+          solve(ans,sidesX,sidesY,k,n,m);
+        }
+        return 0;
 }
