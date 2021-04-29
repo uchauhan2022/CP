@@ -36,7 +36,7 @@ int main()
                         if(s[i]=='M') count++;
                 }
                 if(n/3==count) {
-                        int cT=0,cM=0;
+                        int cT=0;
                         int flag = 0;
                         for(int i = 0; i<(2*n/3); i++) {
                                 if(s[i]=='T') cT++;
