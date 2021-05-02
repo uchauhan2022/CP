@@ -18,6 +18,7 @@ typedef vector<string> VS;
 typedef long int li;
 typedef unsigned long int uli;
 typedef long long int lli;
+
 void printQ(list<pair<int,int> > q){
         cout<<"print queue"<<endl;
         while(!q.empty()) {
@@ -25,6 +26,7 @@ void printQ(list<pair<int,int> > q){
                 q.pop_front();
         }
 }
+
 bool isCyclic(int start, int v,vector<int> adj[], vector<int> &visited){
         list<pair<int,int> > q;
         q.push_back(MP(start,-1));
@@ -34,15 +36,11 @@ bool isCyclic(int start, int v,vector<int> adj[], vector<int> &visited){
                 int cur = q.front().first;
                 q.pop_front();
                 for(int i = 0; i<adj[cur].size(); i++) {
-                        cout<<"Checking node :"<<cur<<" to "<<adj[cur][i]<<endl;
-                        printQ(q);
                         if(!visited[adj[cur][i]]) {
-                                cout<<"not visited"<<endl;
                                 q.push_back(MP(adj[cur][i],cur));
                                 visited[adj[cur][i]]=1;
                         }
                         else if(par!=adj[cur][i]) {
-                                cout<<"visited and not parent"<<endl;
                                 return true;
                         }
                 }
@@ -50,7 +48,6 @@ bool isCyclic(int start, int v,vector<int> adj[], vector<int> &visited){
         return false;
 
 }
-
 
 bool cycle(vector<int> adj[], int v){
         vector<int> visited(v,0);
