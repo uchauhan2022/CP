@@ -19,38 +19,36 @@ typedef long int li;
 typedef unsigned long int uli;
 typedef long long int lli;
 
-bool check(int start, int v, vector<int> adj[], vector<int> &visited){
-        list<int> queue;
-        queue.push_back(start);
-        visited[start]=0;
-        while(!queue.empty()) {
-                int cur = queue.front();
-                queue.pop_front();
+void detectCycle(vector<int> adj[], int n){
+        vector<int> indegree(n,0);
+        list<int> q;
+        vector<int> ans;
+        for(int i = 0; i<n; i++) {
+                for(int j = 0; j<adj[i].size(); j++) {
+                        indegree[adj[i][j]]++;
+                }
+        }
+        for(int i = 0; i<n; i++) {
+                if(indegree[i]==0) q.push_back(i);
+        }
+        int count = 0;
+        while(!q.empty()) {
+                int cur = q.front();
+                ans.push_back(cur);
+                q.pop_front();
+                count++;
                 for(int i = 0; i<adj[cur].size(); i++) {
-                        if(visited[adj[cur][i]]==-1) {
-                                visited[adj[cur][i]]=1-visited[cur];
-                                queue.push_back(adj[cur][i]);
-                        }
-                        else if(visited[adj[cur][i]]==visited[cur]) return true;
+                        if(--indegree[adj[cur][i]]==0) q.push_back(adj[cur][i]);
                 }
         }
-        return false;
-}
 
-bool bipartite(vector<int> adj[], int v){
-        vector<int> visited(v,-1);
-
-        for(int i = 0; i<v; i++) {
-                if(visited[i]==-1) {
-                        if(check(i,v,adj,visited)) return false;
-                }
-        }
-        return true;
+        if(count==n)  cout<<"DAG"<<endl;
+        else cout<<"!DAG"<<endl;
+        return;
 }
 void addEdge(vector<int> adj[], int s, int d){
         adj[s].push_back(d);
 }
-
 
 int main()
 {
@@ -71,11 +69,8 @@ int main()
                         int source,destination;
                         cin>>source>>destination;
                         addEdge(adj,source,destination);
-                        addEdge(adj,destination,source);
                 }
-
-                if(bipartite(adj, v)) cout<<"The graph is bipartite"<<endl;
-                else cout<<"The graph isnt bipartite"<<endl;
+                detectCycle(adj,v);
         }
         return 0;
 }
