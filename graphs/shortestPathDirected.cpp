@@ -28,11 +28,9 @@ void topsort(int start, vector<pair<int,int> > adj[],stack<int> &st, vector<int>
         }
         st.push(start);
 }
-
 vector<int> topologicalSort(vector<pair<int,int> > adj[], int n){
         vector<int> visited(n,0);
         stack<int> st;
-
         for(int i = 0; i<n; i++) {
                 if(!visited[i]) {
                         topsort(i,adj,st,visited);
@@ -45,7 +43,6 @@ vector<int> topologicalSort(vector<pair<int,int> > adj[], int n){
         }
         return ans;
 }
-
 void distance(vector<pair<int,int> > adj[], int n, vector<int> topo){
         vector<int> dist(n,INT_MAX);
         dist[0]=0;
@@ -60,8 +57,6 @@ void distance(vector<pair<int,int> > adj[], int n, vector<int> topo){
                 cout<<dist[i]<<" ";
         }
         cout<<endl;
-
-
 }
 
 void addEdge(vector<pair<int,int> > adj[], int s,int w, int d){
