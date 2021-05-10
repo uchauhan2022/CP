@@ -71,7 +71,7 @@ void krushals(vector<node> &adj, int n){
   }
   cout<<cost<<endl;
   for(auto it:mst){
-    cout<<it.F<<" "<<it.S<<" "<<endl;
+    cout<<it.F<<" "<<it.S<<endl;
   }
 
 }
