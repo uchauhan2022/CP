@@ -1,7 +1,7 @@
 #include "bits/stdc++.h"
 using namespace std;
-#define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
-#define RFOR(i, j, k, in) for (int i=j ; i>=k ; i-=in)
+#define FOR(i, j, k, in) for (int i=j; i<k; i+=in)
+#define RFOR(i, j, k, in) for (int i=j; i>=k; i-=in)
 #define MP make_pair
 #define PB push_back
 #define endl "\n"
@@ -20,29 +20,29 @@ typedef unsigned long int uli;
 typedef long long int lli;
 
 void topsort(int start, vector<int> adj[],stack<int> &st, vector<int> &visited){
-  visited[start]=1;
-  for(int i = 0; i<adj[start].size(); i++){
-    if(!visited[adj[start][i]]){
-      topsort(adj[start][i],adj,st,visited);
-    }
-  }
-  st.push(start);
+        visited[start]=1;
+        for(int i = 0; i<adj[start].size(); i++) {
+                if(!visited[adj[start][i]]) {
+                        topsort(adj[start][i],adj,st,visited);
+                }
+        }
+        st.push(start);
 }
 
 void topologicalSort(vector<int> adj[], int n){
-  vector<int> visited(n,0);
-  stack<int> st;
-  cout<<"topologicalSort :";
-  for(int i = 0; i<n; i++){
-    if(!visited[i]){
-      topsort(i,adj,st,visited);
-    }
-  }
-  while(!st.empty()){
-    cout<<st.top()<<" ";
-    st.pop();
-  }
-  cout<<endl;
+        vector<int> visited(n,0);
+        stack<int> st;
+        cout<<"topologicalSort :";
+        for(int i = 0; i<n; i++) {
+                if(!visited[i]) {
+                        topsort(i,adj,st,visited);
+                }
+        }
+        while(!st.empty()) {
+                cout<<st.top()<<" ";
+                st.pop();
+        }
+        cout<<endl;
 }
 void addEdge(vector<int> adj[], int s, int d){
         adj[s].push_back(d);

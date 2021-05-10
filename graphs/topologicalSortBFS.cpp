@@ -1,7 +1,7 @@
 #include "bits/stdc++.h"
 using namespace std;
-#define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
-#define RFOR(i, j, k, in) for (int i=j ; i>=k ; i-=in)
+#define FOR(i, j, k, in) for (int i=j; i<k; i+=in)
+#define RFOR(i, j, k, in) for (int i=j; i>=k; i-=in)
 #define MP make_pair
 #define PB push_back
 #define endl "\n"
@@ -20,30 +20,30 @@ typedef unsigned long int uli;
 typedef long long int lli;
 
 void topologicalSort(vector<int> adj[], int n){
-  vector<int> indegree(n,0);
-  list<int> q;
-  vector<int> ans;
-  for(int i = 0; i<n ; i++){
-    for(int j = 0; j<adj[i].size(); j++){
-      indegree[adj[i][j]]++;
-    }
-  }
-  for(int i = 0; i<n; i++){
-    if(indegree[i]==0)  q.push_back(i);
-  }
-  while(!q.empty()){
-    int cur = q.front();
-    ans.push_back(cur);
-    q.pop_front();
-    for(int i = 0; i<adj[cur].size(); i++){
-      if(--indegree[adj[cur][i]]==0)  q.push_back(adj[cur][i]);
-    }
-  }
-  cout<<"topologicalSort :";
-  for(int i = 0; i<ans.size(); i++){
-    cout<<ans[i]<<" ";
-  }
-  cout<<endl;
+        vector<int> indegree(n,0);
+        list<int> q;
+        vector<int> ans;
+        for(int i = 0; i<n; i++) {
+                for(int j = 0; j<adj[i].size(); j++) {
+                        indegree[adj[i][j]]++;
+                }
+        }
+        for(int i = 0; i<n; i++) {
+                if(indegree[i]==0) q.push_back(i);
+        }
+        while(!q.empty()) {
+                int cur = q.front();
+                ans.push_back(cur);
+                q.pop_front();
+                for(int i = 0; i<adj[cur].size(); i++) {
+                        if(--indegree[adj[cur][i]]==0) q.push_back(adj[cur][i]);
+                }
+        }
+        cout<<"topologicalSort :";
+        for(int i = 0; i<ans.size(); i++) {
+                cout<<ans[i]<<" ";
+        }
+        cout<<endl;
 }
 void addEdge(vector<int> adj[], int s, int d){
         adj[s].push_back(d);
