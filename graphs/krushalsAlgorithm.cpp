@@ -66,10 +66,13 @@ void krushals(vector<node> &adj, int n){
     if(findParent(it.u,parent)!=findParent(it.v,parent)){
       unionn(it.u,it.v,parent,rank);
       mst.push_back(MP(it.u,it.v));
-      cost+=it.wt
+      cost+=it.weight;
     }
   }
   cout<<cost<<endl;
+  for(auto it:mst){
+    cout<<it.F<<" "<<it.S<<" "<<endl;
+  }
 
 }
 
@@ -94,7 +97,7 @@ int main()
                         cin>>source>>destination>>weight;
                         adj.push_back(node(source,destination,weight));
                 }
-                sort(adj.begin(), edj.end(), comp);
+                sort(adj.begin(), adj.end(), comp);
                 krushals(adj,v);
 
 
